@@ -18,23 +18,27 @@
 class Solution {
     public:
         ListNode* oddEvenList(ListNode* head) {
-            if (!head || !head->next) {
+            if(head == nullptr || head->next == nullptr || head->next->next == nullptr){
                 return head;
             }
-    
-            ListNode* odd = head;            // Pointeur pour la liste impaire
-            ListNode* even = head->next;     // Pointeur pour la liste paire
-            ListNode* evenHead = even;       // Sauvegarde du premier élément pair pour la connexion finale
-    
-            while (even && even->next) {
-                odd->next = even->next;      // Connecter le prochain élément impair
-                odd = odd->next;             // Avancer le pointeur impair
-                even->next = odd->next;      // Connecter le prochain élément pair
-                even = even->next;           // Avancer le pointeur pair
+            ListNode *odd, *even, *lastOdd, *connexion;
+            odd = head;
+            even = head->next;
+            connexion = even;
+            lastOdd = odd;
+            while(odd && even && even->next){
+                odd = even->next;
+                even->next = odd->next;
+                even = odd->next;
+                lastOdd->next = odd;
+                lastOdd = odd;
+           
             }
+            lastOdd->next = connexion;
     
-            odd->next = evenHead;  // Connecter la fin de la liste impaire au début de la liste paire
             return head;
+           
+            
         }
     };
     
